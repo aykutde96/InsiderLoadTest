@@ -1,0 +1,28 @@
+name: Insider LOAD Test Cases
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    steps:
+        - uses: actions/checkout@v2
+        - name: PerfAction for JMeter
+          # You may pin to the exact commit or the version.
+          # uses: QAInsights/PerfAction@f3959d0a69e7f23949add25d7e34a3ae167d6443
+          uses: QAInsights/PerfAction@v3.1
+          with:
+            # jmeter test plan to execute
+            test-plan-path: './n11LoadTest.jmx'
+        - name: Upload reports
+          uses: actions/upload-artifact@v2
+          with:
+            name: jmeter-report
+            path: result.jtl
+
+            
